@@ -1,0 +1,30 @@
+package com.example.finalapp.presentation.home
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.finalapp.data.local.TodoEntitiy
+import com.example.finalapp.domain.repository.TodoDaoRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class HomeScreenViewModel @Inject constructor(
+    private val repository : TodoDaoRepositoryImpl
+) : ViewModel(){
+
+    private val _list = MutableStateFlow<List<TodoEntitiy>>(emptyList())
+    val list : StateFlow<List<TodoEntitiy>>
+        get() = _list.asStateFlow()
+
+    fun getAllTodos(){
+        viewModelScope.launch {
+            repository.getTodos().collect{todoList ->
+                _list.value=todoList
+            }
+        }
+    }
+}
