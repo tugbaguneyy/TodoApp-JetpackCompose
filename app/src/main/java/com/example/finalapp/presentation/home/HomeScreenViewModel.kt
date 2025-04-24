@@ -20,6 +20,10 @@ class HomeScreenViewModel @Inject constructor(
     val list : StateFlow<List<TodoEntitiy>>
         get() = _list.asStateFlow()
 
+    init {
+        getAllTodos()
+    }
+
     fun getAllTodos(){
         viewModelScope.launch {
             repository.getTodos().collect{todoList ->

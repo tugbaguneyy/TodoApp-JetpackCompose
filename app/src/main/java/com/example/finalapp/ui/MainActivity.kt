@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.finalapp.navigation.NavigationGraph
 import com.example.finalapp.navigation.Screen.Main
+import com.example.finalapp.presentation.home.HomeScreen
 import com.example.finalapp.ui.theme.MyappTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,15 +22,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyappTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-                    val startDestination = Main
-                    NavigationGraph(
-                        navController = navController,
-                        startDestination = startDestination,
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
+                HomeScreen()
             }
         }
     }
