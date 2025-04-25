@@ -32,4 +32,10 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+
+    fun updateTodoCompletion(id: Int, isCompleted: Boolean) {
+        viewModelScope.launch {
+            todoUseCases.updateTodoCompletion(id, isCompleted)
+        }
+    }
 }

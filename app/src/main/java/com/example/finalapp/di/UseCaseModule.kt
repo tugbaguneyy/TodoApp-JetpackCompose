@@ -6,6 +6,7 @@ import com.example.finalapp.domain.usecase.DeleteTodoUseCase
 import com.example.finalapp.domain.usecase.GetTodoByIdUseCase
 import com.example.finalapp.domain.usecase.GetTodosUseCase
 import com.example.finalapp.domain.usecase.TodoUseCases
+import com.example.finalapp.domain.usecase.UpdateTodoCompletionUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,8 @@ object UseCaseModule {
             getTodos = GetTodosUseCase(repository),
             getTodoById = GetTodoByIdUseCase(repository),
             addTodo = AddTodoUseCase(repository),
-            deleteTodo = DeleteTodoUseCase(repository)
+            deleteTodo = DeleteTodoUseCase(repository),
+            updateTodoCompletion = UpdateTodoCompletionUseCase(repository)
         )
     }
 }

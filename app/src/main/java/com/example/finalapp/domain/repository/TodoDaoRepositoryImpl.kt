@@ -29,4 +29,8 @@ class TodoDaoRepositoryImpl @Inject constructor(
         }
     }
 
+    suspend fun updateTodoCompletion(id: Int, isCompleted: Boolean) {
+        todoDao.updateTodoCompletion(id, isCompleted)
+    }
+
 }

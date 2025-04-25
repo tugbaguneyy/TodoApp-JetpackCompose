@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FinalApp</string>
+    <string name="header_todolist">To Do List</string>
 </resources>

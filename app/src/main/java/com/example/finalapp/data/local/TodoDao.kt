@@ -18,4 +18,7 @@ interface TodoDao{
 
     @Query("SELECT * FROM Todos WHERE id = :id")
     fun getTodoById(id: Int): Flow<TodoEntitiy>
+
+    @Query("UPDATE Todos SET isCompleted = :isCompleted WHERE id = :id")
+    suspend fun updateTodoCompletion(id: Int, isCompleted: Boolean)
 }

@@ -8,6 +8,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -32,6 +35,16 @@ private val LightColorScheme = lightColorScheme(
      */
 )
 
+val AppBackgroundBrush = Brush.linearGradient(
+    colors = listOf(
+        Color(0xFFF48FB1),// soft pink
+        Color(0xFFE1BEE7), // light yellow
+        Color(0xFFFFCCBC)  // light purple
+    ),
+    start = Offset(0f, 0f),
+    end = Offset(1000f, 1000f)
+)
+
 @Composable
 fun MyappTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -51,7 +64,7 @@ fun MyappTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = AppTypography,
         content = content
     )
 }
