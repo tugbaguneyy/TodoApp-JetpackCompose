@@ -1,5 +1,6 @@
 package com.example.finalapp.presentation.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import com.example.finalapp.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navController: NavController){
     val viewModel = hiltViewModel<HomeScreenViewModel>()
     val todoList = viewModel.list.collectAsStateWithLifecycle()
 
@@ -32,7 +35,9 @@ fun HomeScreen(){
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
+            FloatingActionButton(onClick = {
+                navController.navigate(Screen.Add)
+            }) {
                 Icon(Icons.Default.Add, contentDescription = "Add Todo Button")
             }
         }
@@ -42,7 +47,7 @@ fun HomeScreen(){
             contentPadding = paddings
         ) {
             items(todoList.value.size){
-                Card{
+                Card(modifier = Modifier.clickable { navController.navigate(Screen.Detail(todoList.value[it].id)) }){
                     Column {
                         Text(todoList.value[it].title)
                         Text(todoList.value[it].description)

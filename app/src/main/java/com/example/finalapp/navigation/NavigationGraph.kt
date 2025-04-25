@@ -1,26 +1,31 @@
 package com.example.finalapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.finalapp.navigation.Screen.Main
+import androidx.navigation.compose.rememberNavController
+import com.example.finalapp.presentation.add.AddScreen
+import com.example.finalapp.presentation.detail.DetailScreen
+import com.example.finalapp.presentation.home.HomeScreen
 
 
 @Composable
 fun NavigationGraph(
-    navController: NavHostController,
-    startDestination: Screen,
-    modifier: Modifier = Modifier,
 ) {
+    val navController = rememberNavController()
     NavHost(
-        modifier = modifier,
         navController = navController,
-        startDestination = startDestination,
+        startDestination = Screen.Home,
     ) {
-        composable<Main> {
-
+        composable<Screen.Home> {
+            HomeScreen(navController)
+        }
+        composable<Screen.Detail> {
+            DetailScreen(navController)
+        }
+        composable<Screen.Add> {
+            AddScreen(navController)
         }
     }
 }

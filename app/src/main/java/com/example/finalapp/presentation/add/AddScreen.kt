@@ -15,10 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.finalapp.data.local.TodoEntitiy
 
 @Composable
-fun AddScreen(){
+fun AddScreen(navController: NavController){
     val viewModel = hiltViewModel<AddScreenViewModel>()
     val title = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
@@ -35,6 +36,10 @@ fun AddScreen(){
             viewModel.insertTodo(todo)
         }) {
             Text("Add")
+        }
+
+        Button(onClick = {navController.navigateUp()}) {
+            Text("Geri Dön")
         }
     }
 }
