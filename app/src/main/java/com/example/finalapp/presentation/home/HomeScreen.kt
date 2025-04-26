@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.finalapp.data.local.TodoEntitiy
 import com.example.finalapp.navigation.Screen
+import com.example.finalapp.presentation.home.components.AddTodoBottomSheet
 import com.example.finalapp.presentation.home.components.DateHeader
 import com.example.finalapp.presentation.home.components.TodoBottomSheet
 import com.example.finalapp.presentation.home.components.TodoList
@@ -31,29 +32,44 @@ fun HomeScreen(navController: NavController) {
     val dateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
 
     var selectedTodo by remember { mutableStateOf<TodoEntitiy?>(null) }
-    val scope = rememberCoroutineScope()
+    var showAddSheet by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(16.dp)) {
+
         DateHeader(dateFormatted)
 
         TodoList(
             todos = todos.value,
-            onItemClick = { todo -> selectedTodo = todo },
-            onCheckedChange = { id, isChecked ->
-                viewModel.updateTodoCompletion(id, isChecked)
+            onItemClick = { selectedTodo = it },
+            onCheckedChange = { id, isCompleted ->
+                viewModel.updateTodoCompletion(id, isCompleted)
             },
-            onAddTodoClick = { navController.navigate(Screen.Add) }
+            onAddTodoClick = { showAddSheet = true }
         )
 
         selectedTodo?.let { todo ->
             TodoBottomSheet(
-                todo = selectedTodo!!,
+                todo = todo,
                 onDismiss = { selectedTodo = null },
                 onUpdate = { title, desc, completed ->
-                    viewModel.updateTodo(selectedTodo!!.id, title, desc, completed)
+                    viewModel.updateTodo(todo.id, title, desc, completed)
                 },
                 onDelete = {
-                    viewModel.deleteTodo(selectedTodo!!.id)
+                    viewModel.deleteTodo(todo.id)
+                }
+            )
+        }
+
+        if (showAddSheet) {
+            AddTodoBottomSheet(
+                onDismiss = { showAddSheet = false },
+                onInsert = { title, description ->
+                    viewModel.insertTodo(
+                        TodoEntitiy(
+                            title = title,
+                            description = description
+                        )
+                    )
                 }
             )
         }

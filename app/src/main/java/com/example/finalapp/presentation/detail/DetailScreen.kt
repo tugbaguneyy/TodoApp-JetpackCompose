@@ -15,25 +15,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun DetailScreen(navController: NavController){
-    val viewModel = hiltViewModel<DetailScreenViewModel>()
-    val todo=viewModel.todo.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
-        Text(todo.value.title)
-        Text(todo.value.description)
-        Switch(
-            checked = todo.value.isCompleted,
-            onCheckedChange = {
-
-            }
-        )
-
-        Button(
-            onClick = {
-                navController.navigateUp()
-            }
-        ) {
-            Text("Geri Dön")
-        }
-    }
 }

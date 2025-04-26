@@ -50,4 +50,11 @@ class HomeScreenViewModel @Inject constructor(
             todoUseCases.updateTodo(id, title, description, isCompleted)
         }
     }
+
+    fun insertTodo(todo: TodoEntitiy) {
+        viewModelScope.launch {
+            todoUseCases.addTodo(todo)
+        }
+
+    }
 }
