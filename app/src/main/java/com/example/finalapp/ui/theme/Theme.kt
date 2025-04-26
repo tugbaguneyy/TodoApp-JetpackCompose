@@ -35,16 +35,6 @@ private val LightColorScheme = lightColorScheme(
      */
 )
 
-val AppBackgroundBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFFF48FB1),// soft pink
-        Color(0xFFE1BEE7), // light yellow
-        Color(0xFFFFCCBC)  // light purple
-    ),
-    start = Offset(0f, 0f),
-    end = Offset(1000f, 1000f)
-)
-
 @Composable
 fun MyappTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

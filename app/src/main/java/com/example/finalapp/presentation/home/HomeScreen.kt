@@ -1,22 +1,19 @@
 package com.example.finalapp.presentation.home
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -24,8 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,6 +30,7 @@ import com.example.finalapp.navigation.Screen
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@SuppressLint("SuspiciousIndentation")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -46,7 +42,6 @@ fun HomeScreen(navController: NavController) {
 
 
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            // Title Row with the date aligned to the right
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,10 +62,8 @@ fun HomeScreen(navController: NavController) {
                 )
             }
 
-            // Horizontal Divider
             HorizontalDivider(thickness = 1.dp, color = Color.Black)
 
-            // LazyColumn for displaying the todo items
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
