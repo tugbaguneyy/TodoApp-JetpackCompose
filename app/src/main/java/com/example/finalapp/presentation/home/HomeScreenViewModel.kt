@@ -43,6 +43,11 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             todoUseCases.deleteTodo(id)
         }
+    }
 
+    fun updateTodo(id: Int, title: String, description: String, isCompleted: Boolean) {
+        viewModelScope.launch {
+            todoUseCases.updateTodo(id, title, description, isCompleted)
+        }
     }
 }

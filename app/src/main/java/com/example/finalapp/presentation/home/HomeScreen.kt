@@ -50,7 +50,7 @@ fun HomeScreen(navController: NavController) {
                 todo = selectedTodo!!,
                 onDismiss = { selectedTodo = null },
                 onUpdate = { title, desc, completed ->
-                    //viewModel.updateTodo(selectedTodo!!.id, title, desc, completed)
+                    viewModel.updateTodo(selectedTodo!!.id, title, desc, completed)
                 },
                 onDelete = {
                     viewModel.deleteTodo(selectedTodo!!.id)

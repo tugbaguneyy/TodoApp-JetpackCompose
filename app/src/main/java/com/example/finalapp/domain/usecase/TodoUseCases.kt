@@ -7,6 +7,7 @@ data class TodoUseCases @Inject constructor(
     val getTodoById: GetTodoByIdUseCase,
     val addTodo: AddTodoUseCase,
     val deleteTodo: DeleteTodoUseCase,
-    val updateTodoCompletion: UpdateTodoCompletionUseCase
+    val updateTodoCompletion: UpdateTodoCompletionUseCase,
+    val updateTodo: UpdateTodoUseCase
 
 )
