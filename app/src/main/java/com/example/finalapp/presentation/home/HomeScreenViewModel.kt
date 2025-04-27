@@ -21,16 +21,30 @@ class HomeScreenViewModel @Inject constructor(
     val list : StateFlow<List<TodoEntitiy>>
         get() = _list.asStateFlow()
 
+    // Progress
+    private val _progress = MutableStateFlow(0f) // 0.0 - 1.0
+    val progress: StateFlow<Float>
+        get() = _progress.asStateFlow()
+
     init {
         getAllTodos()
     }
 
-    fun getAllTodos(){
+    fun getAllTodos() {
         viewModelScope.launch {
-            todoUseCases.getTodos().collect{todoList ->
-                _list.value=todoList
+            todoUseCases.getTodos().collect { todoList ->
+                _list.value = todoList
+                calculateProgress(todoList)
             }
         }
+    }
+
+    // Progress hesaplayan fonksiyon
+    private fun calculateProgress(todoList: List<TodoEntitiy>) {
+        val total = todoList.size
+        val completed = todoList.count { it.isCompleted }
+
+        _progress.value = if (total == 0) 0f else completed.toFloat() / total.toFloat()
     }
 
     fun updateTodoCompletion(id: Int, isCompleted: Boolean) {
