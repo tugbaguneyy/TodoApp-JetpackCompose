@@ -7,8 +7,11 @@ import com.example.finalapp.domain.repository.TodoDaoRepositoryImpl
 import com.example.finalapp.domain.usecase.TodoUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -71,4 +74,21 @@ class HomeScreenViewModel @Inject constructor(
         }
 
     }
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
+
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+    }
+
+    val filteredList = combine(list, searchQuery) { todos, query ->
+        if (query.isBlank()) {
+            todos
+        } else {
+            todos.filter { it.title.contains(query, ignoreCase = true) }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+
 }

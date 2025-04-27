@@ -19,8 +19,7 @@ import com.example.finalapp.R
 fun DateHeader(dateFormatted: String) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 40.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(

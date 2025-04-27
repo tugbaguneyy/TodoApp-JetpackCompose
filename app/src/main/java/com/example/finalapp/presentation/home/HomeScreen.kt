@@ -3,6 +3,7 @@ package com.example.finalapp.presentation.home
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -26,11 +27,16 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen() {
     val viewModel = hiltViewModel<HomeScreenViewModel>()
     val todos = viewModel.list.collectAsStateWithLifecycle()
     val progress = viewModel.progress.collectAsStateWithLifecycle()
+    val filteredTodos = viewModel.filteredList.collectAsStateWithLifecycle()
     val dateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+
+    var isSearching by remember { mutableStateOf(false) }
+    var searchText by remember { mutableStateOf("") }
+
 
     var selectedTodo by remember { mutableStateOf<TodoEntitiy?>(null) }
     var showAddSheet by remember { mutableStateOf(false) }
@@ -39,7 +45,20 @@ fun HomeScreen(navController: NavController) {
         bottomBar = {
             BottomBar(
                 progress = progress.value,
-                onAddClick = { showAddSheet = true }
+                isSearching = isSearching,
+                searchText = searchText,
+                onSearchTextChange = { text ->
+                    searchText = text
+                    viewModel.onSearchQueryChanged(text)
+                },
+                onAddClick = { showAddSheet = true },
+                onSearchClick = {
+                    isSearching = !isSearching
+                    if (!isSearching) {
+                        searchText = ""
+                        viewModel.onSearchQueryChanged("")
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -51,7 +70,7 @@ fun HomeScreen(navController: NavController) {
             DateHeader(dateFormatted)
 
             TodoList(
-                todos = todos.value,
+                todos = filteredTodos.value,
                 onItemClick = { selectedTodo = it },
                 onCheckedChange = { id, isCompleted ->
                     viewModel.updateTodoCompletion(id, isCompleted)

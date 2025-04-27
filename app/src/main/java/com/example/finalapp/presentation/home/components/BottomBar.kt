@@ -17,12 +17,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun BottomBar(
     progress: Float,
-    onAddClick: () -> Unit
+    isSearching: Boolean,
+    searchText: String,
+    onSearchTextChange: (String) -> Unit,
+    onAddClick: () -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Surface(
         tonalElevation = 8.dp,
@@ -40,28 +46,43 @@ fun BottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Add Button (En solda)
-            IconButton(
-                onClick = onAddClick,
-                modifier = Modifier.size(48.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Todo",
-                    tint = MaterialTheme.colorScheme.primary
+
+
+            if (isSearching) {
+                TextField(
+                    value = searchText,
+                    onValueChange = onSearchTextChange,
+                    placeholder = { Text("Search...") },
+                    modifier = Modifier.weight(1f),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
+            } else {
+                IconButton(
+                    onClick = onAddClick,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add Todo",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                CircularProgress(progress = progress)
             }
 
-            // Progress Ortada
-            CircularProgress(progress = progress)
-
             IconButton(
-                onClick = { /* Şimdilik bir şey yapmıyor */ },
+                onClick = onSearchClick,
                 modifier = Modifier.size(48.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Coffee Icon",
+                    imageVector = if (isSearching) Icons.Default.Close else Icons.Default.Search,
+                    contentDescription = "Search",
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
