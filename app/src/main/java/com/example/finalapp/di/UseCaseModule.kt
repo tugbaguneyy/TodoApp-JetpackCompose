@@ -2,6 +2,7 @@ package com.example.finalapp.di
 
 import com.example.finalapp.domain.repository.TodoDaoRepositoryImpl
 import com.example.finalapp.domain.usecase.AddTodoUseCase
+import com.example.finalapp.domain.usecase.DeleteAllUseCase
 import com.example.finalapp.domain.usecase.DeleteTodoUseCase
 import com.example.finalapp.domain.usecase.GetTodoByIdUseCase
 import com.example.finalapp.domain.usecase.GetTodosUseCase
@@ -27,7 +28,8 @@ object UseCaseModule {
             addTodo = AddTodoUseCase(repository),
             deleteTodo = DeleteTodoUseCase(repository),
             updateTodoCompletion = UpdateTodoCompletionUseCase(repository),
-            updateTodo = UpdateTodoUseCase(repository)
+            updateTodo = UpdateTodoUseCase(repository),
+            deleteAllTodos = DeleteAllUseCase(repository)
         )
     }
 }

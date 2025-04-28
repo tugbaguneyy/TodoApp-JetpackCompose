@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import com.example.finalapp.R
 
 @Composable
 fun BottomBar(
@@ -28,7 +30,8 @@ fun BottomBar(
     searchText: String,
     onSearchTextChange: (String) -> Unit,
     onAddClick: () -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onClearClick: () -> Unit
 ) {
     Surface(
         tonalElevation = 8.dp,
@@ -70,6 +73,15 @@ fun BottomBar(
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Todo",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                IconButton(onClick = onClearClick,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ink_eraser_24px),
+                        contentDescription = "Clear All",
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }

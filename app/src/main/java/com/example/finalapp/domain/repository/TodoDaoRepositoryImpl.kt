@@ -37,5 +37,9 @@ class TodoDaoRepositoryImpl @Inject constructor(
         todoDao.updateTodo(id, title, description, isCompleted)
     }
 
+    suspend fun deleteAllTodos() {
+        todoDao.deleteAllTodos()
+    }
+
 
 }

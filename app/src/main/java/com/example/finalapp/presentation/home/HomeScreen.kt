@@ -49,6 +49,8 @@ fun HomeScreen() {
     val randomQuote = remember { quotes.random() }
     var showDialog by remember { mutableStateOf(true) }
 
+    var showClearDialog by remember { mutableStateOf(false) }
+
 
 
     Scaffold(
@@ -68,6 +70,9 @@ fun HomeScreen() {
                         searchText = ""
                         viewModel.onSearchQueryChanged("")
                     }
+                },
+                onClearClick = {
+                    showClearDialog = true
                 }
             )
         }
@@ -82,6 +87,29 @@ fun HomeScreen() {
                 },
                 title = { Text("You have a message!") },
                 text = { Text(randomQuote) }
+            )
+        }
+
+        if (showClearDialog) {
+            AlertDialog(
+                onDismissRequest = { showClearDialog = false },
+                title = { Text(text = "Clear All Todos") },
+                text = { Text(text = "Are you sure you want to clear all todos?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.deleteAllTodos()
+                        showClearDialog = false
+                    }) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        showClearDialog = false
+                    }) {
+                        Text("No")
+                    }
+                }
             )
         }
 

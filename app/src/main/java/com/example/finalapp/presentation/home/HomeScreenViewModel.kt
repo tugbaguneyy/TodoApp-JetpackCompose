@@ -74,6 +74,11 @@ class HomeScreenViewModel @Inject constructor(
         }
 
     }
+    fun deleteAllTodos() {
+        viewModelScope.launch {
+            todoUseCases.deleteAllTodos()
+        }
+    }
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
