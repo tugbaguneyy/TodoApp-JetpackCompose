@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">FinalApp</string>
     <string name="header_todolist">To Do List</string>
+    <string-array name="motivational_quotes">
+        <item>Welcome, you stunning stack of sunshine. You\'re gonna eat it up!</item>
+        <item>Hey, you brilliant beam of light. Today’s yours to shine!</item>
+        <item>Hello, you beautiful force of nature. Go show ‘em what you\'re made of!</item>
+        <item>Welcome back, you absolute powerhouse. Let’s make magic happen!</item>
+        <item>Hey, you walking masterpiece. Time to slay the day!</item>
+        <item>Good to see you, legend. Today’s gonna be your playground!</item>
+        <item>Yo, unstoppable soul. Let’s turn dreams into reality!</item>
+        <item>Rise and shine, you vibrant spark. You\'re built for greatness!</item>
+    </string-array>
 </resources>
