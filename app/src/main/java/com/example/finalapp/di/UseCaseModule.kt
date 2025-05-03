@@ -6,7 +6,6 @@ import com.example.finalapp.domain.usecase.DeleteAllUseCase
 import com.example.finalapp.domain.usecase.DeleteTodoUseCase
 import com.example.finalapp.domain.usecase.GetTodoByIdUseCase
 import com.example.finalapp.domain.usecase.GetTodosUseCase
-import com.example.finalapp.domain.usecase.TodoUseCases
 import com.example.finalapp.domain.usecase.UpdateTodoCompletionUseCase
 import com.example.finalapp.domain.usecase.UpdateTodoUseCase
 import dagger.Module
@@ -21,15 +20,43 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideTodoUseCases(repository: TodoDaoRepositoryImpl): TodoUseCases {
-        return TodoUseCases(
-            getTodos = GetTodosUseCase(repository),
-            getTodoById = GetTodoByIdUseCase(repository),
-            addTodo = AddTodoUseCase(repository),
-            deleteTodo = DeleteTodoUseCase(repository),
-            updateTodoCompletion = UpdateTodoCompletionUseCase(repository),
-            updateTodo = UpdateTodoUseCase(repository),
-            deleteAllTodos = DeleteAllUseCase(repository)
-        )
+    fun provideGetTodosUseCase(repository: TodoDaoRepositoryImpl): GetTodosUseCase {
+        return GetTodosUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetTodoByIdUseCase(repository: TodoDaoRepositoryImpl): GetTodoByIdUseCase {
+        return GetTodoByIdUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddTodoUseCase(repository: TodoDaoRepositoryImpl): AddTodoUseCase {
+        return AddTodoUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteTodoUseCase(repository: TodoDaoRepositoryImpl): DeleteTodoUseCase {
+        return DeleteTodoUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateTodoUseCase(repository: TodoDaoRepositoryImpl): UpdateTodoUseCase {
+        return UpdateTodoUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateTodoCompletionUseCase(repository: TodoDaoRepositoryImpl): UpdateTodoCompletionUseCase {
+        return UpdateTodoCompletionUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteAllTodosUseCase(repository: TodoDaoRepositoryImpl): DeleteAllUseCase {
+        return DeleteAllUseCase(repository)
     }
 }

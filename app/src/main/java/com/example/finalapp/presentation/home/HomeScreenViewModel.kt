@@ -3,8 +3,12 @@ package com.example.finalapp.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalapp.data.local.TodoEntitiy
-import com.example.finalapp.domain.repository.TodoDaoRepositoryImpl
-import com.example.finalapp.domain.usecase.TodoUseCases
+import com.example.finalapp.domain.usecase.AddTodoUseCase
+import com.example.finalapp.domain.usecase.DeleteAllUseCase
+import com.example.finalapp.domain.usecase.DeleteTodoUseCase
+import com.example.finalapp.domain.usecase.GetTodosUseCase
+import com.example.finalapp.domain.usecase.UpdateTodoCompletionUseCase
+import com.example.finalapp.domain.usecase.UpdateTodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,71 +21,71 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val todoUseCases: TodoUseCases
-) : ViewModel(){
+    private val getTodosUseCase: GetTodosUseCase,
+    private val updateTodoCompletionUseCase: UpdateTodoCompletionUseCase,
+    private val deleteTodoUseCase: DeleteTodoUseCase,
+    private val updateTodoUseCase: UpdateTodoUseCase,
+    private val addTodoUseCase: AddTodoUseCase,
+    private val deleteAllUseCase: DeleteAllUseCase
+) : ViewModel() {
 
     private val _list = MutableStateFlow<List<TodoEntitiy>>(emptyList())
-    val list : StateFlow<List<TodoEntitiy>>
-        get() = _list.asStateFlow()
+    val list: StateFlow<List<TodoEntitiy>> = _list.asStateFlow()
 
-    // Progress
-    private val _progress = MutableStateFlow(0f) // 0.0 - 1.0
-    val progress: StateFlow<Float>
-        get() = _progress.asStateFlow()
+    private val _progress = MutableStateFlow(0f)
+    val progress: StateFlow<Float> = _progress.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+    private val searchQuery = _searchQuery.asStateFlow()
 
     init {
         getAllTodos()
     }
 
-    fun getAllTodos() {
+    private fun getAllTodos() {
         viewModelScope.launch {
-            todoUseCases.getTodos().collect { todoList ->
+            getTodosUseCase().collect { todoList ->
                 _list.value = todoList
                 calculateProgress(todoList)
             }
         }
     }
 
-    // Progress hesaplayan fonksiyon
     private fun calculateProgress(todoList: List<TodoEntitiy>) {
         val total = todoList.size
         val completed = todoList.count { it.isCompleted }
-
         _progress.value = if (total == 0) 0f else completed.toFloat() / total.toFloat()
     }
 
     fun updateTodoCompletion(id: Int, isCompleted: Boolean) {
         viewModelScope.launch {
-            todoUseCases.updateTodoCompletion(id, isCompleted)
+            updateTodoCompletionUseCase(id, isCompleted)
         }
     }
 
     fun deleteTodo(id: Int) {
         viewModelScope.launch {
-            todoUseCases.deleteTodo(id)
+            deleteTodoUseCase(id)
         }
     }
 
     fun updateTodo(id: Int, title: String, description: String, isCompleted: Boolean) {
         viewModelScope.launch {
-            todoUseCases.updateTodo(id, title, description, isCompleted)
+            updateTodoUseCase(id, title, description, isCompleted)
         }
     }
 
     fun insertTodo(todo: TodoEntitiy) {
         viewModelScope.launch {
-            todoUseCases.addTodo(todo)
+            addTodoUseCase(todo)
         }
-
     }
+
     fun deleteAllTodos() {
         viewModelScope.launch {
-            todoUseCases.deleteAllTodos()
+            deleteAllUseCase()
         }
     }
-
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
 
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
@@ -94,6 +98,4 @@ class HomeScreenViewModel @Inject constructor(
             todos.filter { it.title.contains(query, ignoreCase = true) }
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-
 }

@@ -77,42 +77,6 @@ fun HomeScreen() {
             )
         }
     ) { paddingValues ->
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                confirmButton = {
-                    TextButton(onClick = { showDialog = false }) {
-                        Text("Yes🤩")
-                    }
-                },
-                title = { Text("You have a message!") },
-                text = { Text(randomQuote) }
-            )
-        }
-
-        if (showClearDialog) {
-            AlertDialog(
-                onDismissRequest = { showClearDialog = false },
-                title = { Text(text = "Clear All Todos") },
-                text = { Text(text = "Are you sure you want to clear all todos?") },
-                confirmButton = {
-                    TextButton(onClick = {
-                        viewModel.deleteAllTodos()
-                        showClearDialog = false
-                    }) {
-                        Text("Yes")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = {
-                        showClearDialog = false
-                    }) {
-                        Text("No")
-                    }
-                }
-            )
-        }
-
 
         Column(modifier = Modifier
             .padding(paddingValues)
@@ -157,5 +121,43 @@ fun HomeScreen() {
                 )
             }
         }
+    }
+
+    //alert dialog sonda göster
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Yes🤩")
+                }
+            },
+            title = { Text("You have a message!") },
+            text = { Text(randomQuote) }
+        )
+    }
+
+    if (showClearDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearDialog = false },
+            title = { Text(text = "Clear All Todos") },
+            text = { Text(text = "Are you sure you want to clear all todos?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteAllTodos()
+                    showClearDialog = false
+                }) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showClearDialog = false
+                }) {
+                    Text("No")
+                }
+            }
+        )
     }
 }
