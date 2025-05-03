@@ -21,15 +21,15 @@ fun TodoItem(
     onCheckedChange: (Boolean) -> Unit,
     onClick: () -> Unit
 ) {
-    val alpha = if (todo.isCompleted) 0.5f else 1f  // solukluk
-    val textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None  // üstü çizili mi
+    val alpha = if (todo.isCompleted) 0.5f else 1f
+    val textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { onClick() }
-            .alpha(alpha),  // satır komple soluk olsun
+            .alpha(alpha),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(

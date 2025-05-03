@@ -32,7 +32,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun HomeScreen() {
     val viewModel = hiltViewModel<HomeScreenViewModel>()
-    val todos = viewModel.list.collectAsStateWithLifecycle()
     val progress = viewModel.progress.collectAsStateWithLifecycle()
     val filteredTodos = viewModel.filteredList.collectAsStateWithLifecycle()
     val dateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
@@ -123,7 +122,6 @@ fun HomeScreen() {
         }
     }
 
-    //alert dialog sonda göster
 
     if (showDialog) {
         AlertDialog(

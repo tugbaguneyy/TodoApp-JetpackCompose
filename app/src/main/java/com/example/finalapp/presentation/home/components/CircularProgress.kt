@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 
@@ -16,13 +17,14 @@ fun CircularProgress(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.size(48.dp) // Büyük yaptık
+        modifier = Modifier.size(48.dp)
     ) {
         CircularProgressIndicator(
-            progress = progress,
-            strokeWidth = 6.dp,
+            progress = { progress },
+            modifier = Modifier.size(64.dp),
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(64.dp)
+            strokeWidth = 6.dp,
+            trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
         )
         Text(
             text = "${(progress * 100).toInt()}%",

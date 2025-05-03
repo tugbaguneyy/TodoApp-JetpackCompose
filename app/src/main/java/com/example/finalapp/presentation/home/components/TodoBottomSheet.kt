@@ -91,7 +91,7 @@ fun TodoBottomSheet(
                     )
                 }
 
-                // Silme butonu
+
                 IconButton(onClick = {
                     onDelete()
                     onDismiss()
@@ -105,7 +105,7 @@ fun TodoBottomSheet(
                 }
             }
 
-            // Açıklama alanı (border olmadan)
+
             TextField(
                 value = description,
                 onValueChange = { description = it },

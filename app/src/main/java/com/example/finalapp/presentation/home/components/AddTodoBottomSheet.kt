@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddTodoBottomSheet(
     onDismiss: () -> Unit,
-    onInsert: (String, String?) -> Unit // title ve description alacak
+    onInsert: (String, String?) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -81,7 +81,6 @@ fun AddTodoBottomSheet(
                 }
             }
 
-            // Açıklama Alanı
             TextField(
                 value = description,
                 onValueChange = { description = it },

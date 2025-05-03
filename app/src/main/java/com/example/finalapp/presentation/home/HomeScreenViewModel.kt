@@ -30,7 +30,7 @@ class HomeScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _list = MutableStateFlow<List<TodoEntitiy>>(emptyList())
-    val list: StateFlow<List<TodoEntitiy>> = _list.asStateFlow()
+    private val list: StateFlow<List<TodoEntitiy>> = _list.asStateFlow()
 
     private val _progress = MutableStateFlow(0f)
     val progress: StateFlow<Float> = _progress.asStateFlow()
