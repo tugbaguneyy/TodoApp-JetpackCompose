@@ -57,11 +57,6 @@ fun HomeScreen() {
             BottomBar(
                 progress = progress.value,
                 isSearching = isSearching,
-                searchText = searchText,
-                onSearchTextChange = { text ->
-                    searchText = text
-                    viewModel.onSearchQueryChanged(text)
-                },
                 onAddClick = { showAddSheet = true },
                 onSearchClick = {
                     isSearching = !isSearching
@@ -82,7 +77,23 @@ fun HomeScreen() {
             .padding(16.dp)
         ) {
 
-            DateHeader(dateFormatted)
+            DateHeader(
+                dateFormatted = dateFormatted,
+                isSearching = isSearching,
+                searchText = searchText,
+                onSearchClick = {
+                    isSearching = !isSearching
+                    if (!isSearching) {
+                        searchText = ""
+                        viewModel.onSearchQueryChanged("")
+                    }
+                },
+                onSearchTextChange = {
+                    searchText = it
+                    viewModel.onSearchQueryChanged(it)
+                }
+            )
+
 
             TodoList(
                 todos = filteredTodos.value,

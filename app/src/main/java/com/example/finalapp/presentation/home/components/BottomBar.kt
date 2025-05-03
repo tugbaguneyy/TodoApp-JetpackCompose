@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.example.finalapp.R
 
@@ -27,8 +26,6 @@ import com.example.finalapp.R
 fun BottomBar(
     progress: Float,
     isSearching: Boolean,
-    searchText: String,
-    onSearchTextChange: (String) -> Unit,
     onAddClick: () -> Unit,
     onSearchClick: () -> Unit,
     onClearClick: () -> Unit
@@ -49,44 +46,27 @@ fun BottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-
-            if (isSearching) {
-                TextField(
-                    value = searchText,
-                    onValueChange = onSearchTextChange,
-                    placeholder = { Text("Search...") },
-                    modifier = Modifier.weight(1f),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    )
+            IconButton(
+                onClick = onAddClick,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Todo",
+                    tint = MaterialTheme.colorScheme.primary
                 )
-            } else {
-                IconButton(
-                    onClick = onAddClick,
-                    modifier = Modifier.size(48.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add Todo",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-                IconButton(onClick = onClearClick,
-                    modifier = Modifier.size(48.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ink_eraser_24px),
-                        contentDescription = "Clear All",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-                CircularProgress(progress = progress)
             }
+            IconButton(
+                onClick = onClearClick,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ink_eraser_24px),
+                    contentDescription = "Clear All",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+            CircularProgress(progress = progress)
 
             IconButton(
                 onClick = onSearchClick,
@@ -100,4 +80,5 @@ fun BottomBar(
             }
         }
     }
+
 }
